@@ -1,59 +1,34 @@
 from pathlib import Path
-    import json
-    from fastapi import FastAPI
-    from fastapi.responses import FileResponse, JSONResponse
-    from fastapi.staticfiles import StaticFiles
+import json
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
-    BASE = Path(__file__).resolve().parent
-    WEB = BASE / 'web'
-    DATA = {
-  "signals": [
-    {
-      "signal": "EUR receivable concentration",
-      "severity": "Elevated",
-      "impact": "$1.8M margin sensitivity"
-    },
-    {
-      "signal": "July refinancing window",
-      "severity": "Watch",
-      "impact": "170 bps spread risk if delayed"
-    },
-    {
-      "signal": "APAC cash buffer",
-      "severity": "Healthy",
-      "impact": "7.4 weeks runway at current burn"
-    }
-  ],
-  "scenarios": [
-    {
-      "scenario": "USD +5%",
-      "ebitda_delta": "-2.1%",
-      "liquidity_delta": "-$3.4M"
-    },
-    {
-      "scenario": "Rate shock +75 bps",
-      "ebitda_delta": "-0.8%",
-      "liquidity_delta": "-$1.1M"
-    },
-    {
-      "scenario": "Demand drawdown 12%",
-      "ebitda_delta": "-3.3%",
-      "liquidity_delta": "-$4.6M"
-    }
-  ]
-}
+BASE = Path(__file__).resolve().parents[2]
+MANIFEST = json.loads((BASE / 'config' / 'manifest.json').read_text())
+WEB = Path(__file__).resolve().parent / 'web'
 
-    app = FastAPI(title='Treasury Risk Command Desk', version='0.1.0')
-    app.mount('/static', StaticFiles(directory=str(WEB)), name='static')
+app = FastAPI(title=MANIFEST['title'], version='1.0.0')
+app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
+app.mount('/assets', StaticFiles(directory=str(WEB)), name='assets')
 
-    @app.get('/')
-    def root():
-        return FileResponse(WEB / 'index.html')
+@app.get('/')
+def root():
+    return FileResponse(WEB / 'index.html')
 
-    @app.get('/health')
-    def health():
-        return {'status': 'ok', 'project': 'treasury-risk-command-desk'}
+@app.get('/health')
+def health():
+    return JSONResponse({'status':'ok','project':MANIFEST['slug']})
 
-    @app.get('/api/overview')
-    def overview():
-        return JSONResponse(DATA)
+@app.get('/api/manifest')
+def manifest():
+    return JSONResponse(MANIFEST)
+
+@app.get('/api/readiness')
+def readiness():
+    return JSONResponse(MANIFEST['api_examples']['readiness'])
+
+@app.get('/api/signals')
+def signals():
+    return JSONResponse(MANIFEST['api_examples']['signals'])

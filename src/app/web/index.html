@@ -3,83 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Treasury Risk Command Desk</title>
-  <style>
-    :root {
-      --bg: #06080d;
-      --card: #111722;
-      --line: rgba(110, 174, 255, 0.18);
-      --ink: #eef6ff;
-      --muted: #91a1b8;
-      --accent: #58a6ff;
-      --accent2: #ffb45e;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: "Space Grotesk", "Avenir Next", sans-serif; color: var(--ink); background: radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 20%, transparent), transparent 28%), radial-gradient(circle at bottom right, color-mix(in srgb, var(--accent2) 20%, transparent), transparent 26%), var(--bg); }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 34px 22px 70px; }
-    .hero { display: grid; grid-template-columns: 1.25fr 0.85fr; gap: 18px; margin-bottom: 18px; }
-    .shell, .panel { background: var(--card); border: 1px solid var(--line); border-radius: 26px; }
-    .shell { padding: 30px; box-shadow: 0 20px 55px rgba(0,0,0,0.16); }
-    .eyebrow { display: inline-block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 14px; }
-    h1 { font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 0.94; letter-spacing: -0.04em; margin: 0 0 14px; }
-    p { color: var(--muted); line-height: 1.6; }
-    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
-    .panel { padding: 18px; min-height: 190px; }
-    .data { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
-    .table { padding: 20px; border-radius: 22px; background: rgba(255,255,255,0.03); border: 1px solid var(--line); }
-    .row { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
-    .row:last-child { border-bottom: none; }
-    ul { margin: 14px 0 0; padding-left: 20px; color: var(--muted); }
-    .tag { display: inline-block; padding: 7px 12px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--ink); margin-right: 8px; font-size: 0.88rem; }
-    @media (max-width: 960px) { .hero, .grid, .data { grid-template-columns: 1fr; } }
-  </style>
+  <title>Treasury Risk Command Desk App</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="shell">
-        <div class="eyebrow">finance and treasury operations</div>
+  <div id="scene" class="app-scene">
+    <header class="shell hero">
+      <div>
+        <span class="eyebrow">Applied AI product systems</span>
         <h1>Treasury Risk Command Desk</h1>
-        <p>A treasury control room for exposure, liquidity, and hedge actions.</p>
-        <p>Treasury teams need a concise control room for FX exposure, refinancing windows, liquidity pressure, and scenario planning instead of a generic market terminal.</p>
-        <div>
-          <span class="tag">FastAPI app</span>
-          <span class="tag">Unique UI</span>
-          <span class="tag">Research-backed</span>
-        </div>
+        <p>A production-style derivative project inspired by [Fincept-Corporation/FinceptTerminal](https://github.com/Fincept-Corporation/FinceptTerminal).</p>
       </div>
-      <div class="shell">
-        <h2>Primary users</h2>
-        <ul><li>treasury analyst</li><li>FP&A lead</li><li>CFO chief of staff</li></ul>
-        <h2 style="margin-top:24px;">Why it is different</h2>
-        <p>This derivative translates a broad financial analytics interface into a treasury-specific decision desk with exposures, hedge coverage, scenario impacts, and recommended actions.</p>
-      </div>
-    </section>
-    <section class="grid">
-      <article class="panel"><h3>Exposure board</h3><p>Tracks currency and refinancing concentration in one dense but readable view.</p></article>
-<article class="panel"><h3>Scenario shock</h3><p>Shows P&L and liquidity impact under rate, FX, and demand stress cases.</p></article>
-<article class="panel"><h3>Action queue</h3><p>Turns analytics into hedge, timing, and contingency recommendations for the finance team.</p></article>
-    </section>
-    <section class="data">
-      <div class="table">
-        <h2>Live preview data</h2>
-        <div id="primary"></div>
-      </div>
-      <div class="table">
-        <h2>Operational notes</h2>
-        <p>Open <code>/api/overview</code> for structured data and <code>/health</code> for a simple service check.</p>
-        <p>This UI is intentionally domain-specific so the project reads like a product for a real team, not just a framework wrapper.</p>
-      </div>
-    </section>
+      <aside class="status-card">
+        <div class="pill">API connected</div>
+        <div class="pill">operations lead</div>
+        <div class="pill">glass-atlas</div>
+      </aside>
+    </header>
+    <section id="metrics" class="grid metrics"></section>
+    <section id="signals" class="grid signals"></section>
   </div>
-  <script>
-    fetch('/api/overview').then(r => r.json()).then(data => {
-      const primaryKey = Object.keys(data)[0];
-      const items = data[primaryKey];
-      document.getElementById('primary').innerHTML = items.map(item => `
-        <div class="row"><strong>${Object.values(item)[0]}</strong><span>${Object.values(item).slice(1).join(' • ')}</span></div>
-      `).join('');
-    });
-  </script>
+  <script>window.PROJECT_MANIFEST = {"slug": "treasury-risk-command-desk", "title": "Treasury Risk Command Desk", "summary": "A production-style derivative project inspired by [Fincept-Corporation/FinceptTerminal](https://github.com/Fincept-Corporation/FinceptTerminal).", "domain": "Applied AI product systems", "audience": "operations lead", "promise": "Turn promising technical capability into a production-shaped workflow for real teams.", "hero": ["Production-grade app scaffold with API, CI, tests, Docker, and GitHub Pages landing.", "3D landing surface designed for GitHub Pages and recruiter-friendly storytelling.", "App backend structured for local or container deployment without changing the product narrative."], "kpis": [{"label": "Workflow clarity", "value": "88%", "note": "Operator actions mapped to product stages"}, {"label": "Deployment posture", "value": "API + Docker", "note": "Local and containerized startup paths"}, {"label": "Presentation layer", "value": "3D Pages ready", "note": "Static GitHub landing page included"}], "stages": ["ingest", "validate", "analyze", "decide", "monitor"], "cards": [{"title": "Operator cockpit", "body": "One-screen surface for the operations lead to understand what matters first."}, {"title": "API contract", "body": "Structured endpoints for health, manifest, readiness, and showcase data."}, {"title": "Deployment path", "body": "Repository includes Docker, Compose, CI workflow, and a Pages-ready landing surface."}], "scene": "glass-atlas", "theme": {"bg": "#10070a", "surface": "#1b1116", "ink": "#fff2ec", "muted": "#c7a49b", "accent": "#ff8b61", "accent2": "#ffd166"}, "pages_url": "https://r-behera.github.io/treasury-risk-command-desk/", "api_examples": {"health": {"status": "ok", "project": "treasury-risk-command-desk"}, "readiness": {"api": "ready", "landing_page": "docs/index.html", "container": "Dockerfile present"}, "signals": [{"name": "Decision coverage", "status": "strong", "detail": "App and landing narrative aligned"}, {"name": "Operator context", "status": "strong", "detail": "Primary user anchored as operations lead"}, {"name": "Delivery path", "status": "ready", "detail": "Pages + containerized app scaffold generated"}]}};</script>
+  <script src="/assets/app.js"></script>
 </body>
 </html>
