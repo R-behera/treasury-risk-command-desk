@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "description": "FinceptTerminal is a modern finance application offering advanced market analytics, investment research, and economic data tools, designed for interactive exploration and data-driven decision-making in a user-friendly environment.",
+    "nameWithOwner": "Fincept-Corporation/FinceptTerminal",
+    "stargazerCount": 12905,
+    "updatedAt": "2026-04-22T18:58:24Z",
+    "url": "https://github.com/Fincept-Corporation/FinceptTerminal"
+  },
+  "audit": {
+    "file_count": 2756,
+    "has_ci": true,
+    "has_tests": true,
+    "has_docker": true,
+    "todo_markers": 1
+  },
+  "fork_attempted": true,
+  "fork_created_now": true
+}
